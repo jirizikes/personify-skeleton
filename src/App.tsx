@@ -1,25 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { NameInput } from './components/NameInput';
+import NameCard from './components/NameCard';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div
+        className="bg-text"
+        style={{
+          zIndex: 10,
+        }}
+      >
+        <header>
+          <div className="" style={{ height: '100vh' }}>
+            <div className='h-50 w-100' style={{ background: '#5465FF' }}>
+              <div className='d-flex align-items-center h-100'>
+                <div className='container fluid' >
+                  <div className="row justify-content-sm-center text-center py-10">
+                    <h1 style={{ color: 'white', fontSize: '5em' }}>Personify</h1>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className='h-50 w-100 d-inline-block' style={{ background: '#BFD7FF' }}>
+              <div className='bd-highlight mb-3 d-flex justify-content-center '>
+                <div className='container fluid' >
+                  <div className="row justify-content-sm-center text-left py-10">
+                    <div className="col-sm-7 col-md-5 mb-4 mt-4">
+                      <NameInput></NameInput>
+
+                    </div>
+                  </div>
+                  <div className="row justify-content-sm-center text-left py-10">
+
+                    <div className="col-sm-7 col-md-7">
+                      <NameCard></NameCard>
+
+                    </div>
+                  </div>
+                </div>
+              </div></div>
+          </div>
+        </header>
+      </div>
+    </>
   );
 }
 
