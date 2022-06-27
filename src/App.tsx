@@ -35,6 +35,7 @@ function App() {
                   <div className="row justify-content-sm-center text-left py-10">
 
                     <div className="col-sm-7 col-md-7">
+                      <h2>Results</h2>
                       <NameCard></NameCard>
 
                     </div>
