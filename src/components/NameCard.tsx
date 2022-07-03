@@ -1,26 +1,43 @@
-const NameCard = () => {
-    const genderData = {
-        "name": "peter",
-        "gender": "male",
-        "probability": 0.99,
-        "count": 165452
-    }
+import React from 'react';
+import { Result } from './interfaces';
 
-    const ageData = { "name": "peter", "age": 59, "count": 151057 }
-
-    const nationalityData = { "name": "peter", "country": [{ "country_id": "SK", "probability": 0.1245678651196634 }, { "country_id": "AU", "probability": 0.04147520566025031 }, { "country_id": "KE", "probability": 0.04107488447822492 }] }
-
-    const name = genderData.name.charAt(0).toUpperCase() + genderData.name.slice(1);
-
-    return <>
-        <div className="card mt-3">
-            <div className="card-body">
-                <h3>{name}</h3>
-                <p className="mb-1">Gender: {genderData.gender}</p>
-                <p className="mb-1">Nationality: {nationalityData.country.map(c => c.country_id).join(', ')}</p>
-                <p className="mb-1">Age: {ageData.age}</p>
-            </div>
-        </div>
-    </>
+interface NameCardProps {
+  result?: Result;
 }
-export default NameCard
+
+const NameCard: React.FC<NameCardProps> = ({ result }) => {
+  const name = result?.name
+    ? result?.name.charAt(0).toUpperCase() + result.name.slice(1)
+    : '';
+
+  if (!name || !result?.gender || !result?.age || !result?.nationality) {
+    return (
+      <>
+        <h2>No results found...</h2>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <h2>Result:</h2>
+      <div className="card mt-3">
+        <div className="card-body">
+          <h3>{name}</h3>
+          <small>
+            Link:{' '}
+            {`${window.location.protocol}//${window.location.host}${window.location.pathname}?name=${result.name}`}
+          </small>
+          <p className="mt-3 mb-1">Gender: {result.gender}</p>
+          <p className="mb-1">
+            Nationality:{' '}
+            {result.nationality ? result.nationality.join(', ') : ''}
+          </p>
+          <p className="mb-1">Age: {result.age}</p>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default NameCard;
