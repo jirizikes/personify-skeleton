@@ -1,21 +1,18 @@
 import React from 'react';
+import { Optional } from '../types';
 import { Result } from './interfaces';
 
 interface NameCardProps {
-  result?: Result;
+  result: Optional<Result>;
 }
 
 const NameCard: React.FC<NameCardProps> = ({ result }) => {
-  const name = result?.name
-    ? result?.name.charAt(0).toUpperCase() + result.name.slice(1)
+  const name = result && result.name
+    ? result.name.charAt(0).toUpperCase() + result.name.slice(1)
     : '';
 
   if (!name || !result?.gender || !result?.age || !result?.nationality) {
-    return (
-      <>
-        <h2>No results found...</h2>
-      </>
-    );
+    return <h2>No results found...</h2>;
   }
 
   return (
@@ -25,15 +22,23 @@ const NameCard: React.FC<NameCardProps> = ({ result }) => {
         <div className="card-body">
           <h3>{name}</h3>
           <small>
-            Link:{' '}
+            Link:
+            {' '}
             {`${window.location.protocol}//${window.location.host}${window.location.pathname}?name=${result.name}`}
           </small>
-          <p className="mt-3 mb-1">Gender: {result.gender}</p>
+          <p className="mt-3 mb-1">
+            Gender:
+            {result.gender}
+          </p>
           <p className="mb-1">
-            Nationality:{' '}
+            Nationality:
+            {' '}
             {result.nationality ? result.nationality.join(', ') : ''}
           </p>
-          <p className="mb-1">Age: {result.age}</p>
+          <p className="mb-1">
+            Age:
+            {result.age}
+          </p>
         </div>
       </div>
     </>

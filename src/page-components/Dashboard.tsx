@@ -7,7 +7,7 @@ import {
 } from '../components';
 import { Layout } from '../components/Layout';
 import NameCard from '../components/NameCard';
-import { NameInput } from '../components/NameInput';
+import NameInput from '../components/NameInput';
 import { ApiService } from '../services';
 import { Nullable } from '../types';
 
@@ -15,15 +15,15 @@ const LOCAL_STORAGE_RECENTLY_SEARCHED = 'RECENTLY_SEARCHED';
 
 export const saveRecentlySearchedToLocalStorage = (
   name: string,
-  recentlySearched: string[]
+  recentlySearched: string[],
 ): string[] => {
   recentlySearched.unshift(name);
-  recentlySearched = recentlySearched.slice(0, RECENTLY_SEARCHED_MAX_ITEMS);
+  const sliced = recentlySearched.slice(0, RECENTLY_SEARCHED_MAX_ITEMS);
   localStorage.setItem(
     LOCAL_STORAGE_RECENTLY_SEARCHED,
-    JSON.stringify(recentlySearched)
+    JSON.stringify(sliced),
   );
-  return recentlySearched;
+  return sliced;
 };
 
 export const Dashboard: React.FC = () => {
@@ -40,7 +40,7 @@ export const Dashboard: React.FC = () => {
       const saved = localStorage.getItem(LOCAL_STORAGE_RECENTLY_SEARCHED);
       const initialValue = saved ? JSON.parse(saved) : null;
       return initialValue || [];
-    }
+    },
   );
 
   const handleData = async (saveToLocalStorage: boolean) => {
@@ -51,17 +51,17 @@ export const Dashboard: React.FC = () => {
 
       if (saveToLocalStorage) {
         setRecentlySearched(
-          saveRecentlySearchedToLocalStorage(name, recentlySearched)
+          saveRecentlySearchedToLocalStorage(name, recentlySearched),
         );
       }
 
       setResult({
-        name: name,
+        name,
         gender: genderData?.gender,
         age: ageData?.age,
-        nationality: nationalityData?.country.map(({ country_id }) => {
-          return country_id;
-        }),
+        nationality: nationalityData?.country.map(
+          ({ country_id }) => country_id,
+        ),
       });
       setIsSubbmited(true);
     }
@@ -82,18 +82,16 @@ export const Dashboard: React.FC = () => {
       <div className="row justify-content-sm-center text-left py-10">
         <div className="col-sm-7 col-md-5 mb-4 mt-4">
           <NameInput name={name} setName={setName} handleForm={handleForm} />
-          <RecentlySearched recentlySearched={recentlySearched} />
+          {recentlySearched.length > 0 ? (
+            <RecentlySearched recentlySearched={recentlySearched} />
+          ) : (
+            ''
+          )}
         </div>
       </div>
       <div className="row justify-content-sm-center text-left py-10">
         <div className="col-sm-7 col-md-7">
-          {isSubmitted ? (
-            <>
-              <NameCard result={result}></NameCard>
-            </>
-          ) : (
-            ''
-          )}
+          {isSubmitted ? <NameCard result={result} /> : ''}
         </div>
       </div>
     </Layout>

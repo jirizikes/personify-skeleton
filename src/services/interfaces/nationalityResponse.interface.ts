@@ -1,4 +1,4 @@
-import { CountryResponse } from "./countryResponse.interface";
+import { CountryResponse } from './countryResponse.interface';
 
 export interface NationalityResponse {
     name: string;
