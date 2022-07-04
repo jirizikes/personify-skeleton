@@ -6,17 +6,11 @@ interface RecentlySearchedProps {
   recentlySearched: string[];
 }
 
-export const RecentlySearched: React.FC<RecentlySearchedProps> = ({ recentlySearched }) => {
-  return (
-    <>
-      {recentlySearched.length > 0 ? (
-        <>
-          <strong>Last searched: </strong>
-          {recentlySearched.join(', ')}
-        </>
-      ) : (
-        ''
-      )}
-    </>
-  );
-};
+export const RecentlySearched: React.FC<RecentlySearchedProps> = ({
+  recentlySearched,
+}) => (
+  <>
+    <strong>Last searched: </strong>
+    {recentlySearched.join(', ')}
+  </>
+);
